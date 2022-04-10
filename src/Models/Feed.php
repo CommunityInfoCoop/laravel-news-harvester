@@ -17,6 +17,7 @@ class Feed extends Model
     protected $table = 'harvest_feeds';
 
     protected $fillable = [
+        'source_id',
         'name',
         'type',
         'location',

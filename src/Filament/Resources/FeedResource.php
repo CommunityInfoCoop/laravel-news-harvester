@@ -47,7 +47,7 @@ class FeedResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->placeholder('Name of this feed'),
-                BelongsToSelect::make('source_id')->relationship('source', 'name')->searchable(),
+                BelongsToSelect::make('source_id')->relationship('source', 'name')->searchable()->required(),
                 Select::make('type')
                     ->options(config('news-harvester.select_options.feed_types'))
                     ->reactive()
