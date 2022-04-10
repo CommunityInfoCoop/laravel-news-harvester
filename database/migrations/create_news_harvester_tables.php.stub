@@ -1,0 +1,77 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up(): void
+    {
+        Schema::create('harvest_sources', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('url')->nullable();
+            $table->string('type')->nullable();
+            $table->text('internal_notes')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('harvest_feeds', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\CommunityInfoCoop\NewsHarvester\Models\Source::class)->constrained('harvest_sources');
+            $table->string('name');
+            $table->string('type');
+            $table->string('location');
+            $table->text('internal_notes')->nullable();
+            $table->integer('check_frequency')->nullable();
+            $table->dateTime('last_check_at')->nullable();
+            $table->dateTime('last_succeed_at')->nullable();
+            $table->dateTime('last_new_item_at')->nullable();
+            $table->dateTime('last_fail_at')->nullable();
+            $table->text('last_fail_reason')->nullable();
+            $table->integer('fail_count')->nullable();
+            $table->dateTime('next_check_after')->nullable();
+            $table->boolean('is_admin_paused')->default(false);
+            $table->boolean('is_starred')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('harvest_news_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\CommunityInfoCoop\NewsHarvester\Models\Feed::class)->nullable()->constrained('harvest_feeds');
+            $table->foreignIdFor(\CommunityInfoCoop\NewsHarvester\Models\Source::class)->nullable()->constrained('harvest_sources');
+            $table->string('external_id');
+            $table->datetime('feed_timestamp')->nullable();
+            $table->string('title', 1000);
+            $table->string('url', 1000);
+            $table->text('content')->nullable();
+            $table->string('media_url', 1000)->nullable();
+            $table->mediumInteger('media_width')->nullable();
+            $table->mediumInteger('media_height')->nullable();
+            $table->timestamps();
+        });
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('harvest_news_items');
+        Schema::dropIfExists('harvest_feeds');
+        Schema::dropIfExists('harvest_sources');
+    }
+};
