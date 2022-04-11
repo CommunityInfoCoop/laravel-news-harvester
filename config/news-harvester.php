@@ -1,6 +1,13 @@
 <?php
 // config for CommunityInfoCoop/NewsHarvester
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | What time zone should be used when dates are displayed to users
+    |--------------------------------------------------------------------------
+    */
+
+    'display_time_zone' => 'America/New_York',
 
     /*
     |--------------------------------------------------------------------------

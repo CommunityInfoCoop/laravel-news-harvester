@@ -41,6 +41,7 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'display_time_zone' => 'America/New_York',
     'feeds' => [
         'fetch_timeout' => 15, // in seconds
         'check_frequency' => 60, // default, in minutes

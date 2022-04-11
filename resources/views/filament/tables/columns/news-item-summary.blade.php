@@ -3,7 +3,7 @@
         $record = $getRecord();
     @endphp
     <div class="grow flex flex-col">
-        <div class="news-item-meta text-sm text-gray-600 dark:text-gray-300"><span class="news-item-publish-timestamp">{{ $record->publish_timestamp->format('M d, g:i a') }}</span>
+        <div class="news-item-meta text-sm text-gray-600 dark:text-gray-300"><span class="news-item-publish-timestamp">{{ $record->publish_timestamp->timezone(config('news-harvester.display_time_zone'))->format('M d, g:i a') }}</span>
             / <span class="news-item-source-name">{{ $record->source_info->name }}</span>
             / <span class="news-item-feed-name">{{ $record->feed->name }}</span>
         </div>
