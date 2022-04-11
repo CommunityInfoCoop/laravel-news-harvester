@@ -47,6 +47,7 @@ class CrowdTangle extends BaseBulkFeedHandler
         }
 
         // For each post, if it doesn't already exist, match it up to a feed
+        // TODO empty check and handling for $post['platformId'] and $post['account']['platformId']
         foreach ($posts as $post) {
             $postId = $this->getPostIdFromPlatformId($post['platformId']);
             if (! $this->newsItemExists($postId)) {
@@ -60,10 +61,10 @@ class CrowdTangle extends BaseBulkFeedHandler
                     }
                     $feed->newsItems()->create([
                         'title'          => $this->getTitle($post),
-                        'url'            => $post['postUrl'],
+                        'url'            => $this->getPostUrl($post),
                         'external_id'    => $postId,
                         'feed_timestamp' => $feed_timestamp,
-                        'content'        => $post['message'],
+                        'content'        => $this->getContent($post),
                         'media_url'      => $this->getMediaUrl($post),
                     ]);
                     $this->updateLastSuccess($feed, 1);
@@ -88,12 +89,10 @@ class CrowdTangle extends BaseBulkFeedHandler
      */
     private function getTitle(array $post): string
     {
-        if (! empty($post['message'])) {
-            return Str::limit($post['message'], 75);
-        }
+        $content = $this->getContent($post);
 
-        if (! empty($post['description'])) {
-            return Str::limit($post['description'], 75);
+        if (! empty($content)) {
+            return Str::limit($content, 75);
         }
 
         if (! empty($post['account']['name'])) {
@@ -107,6 +106,23 @@ class CrowdTangle extends BaseBulkFeedHandler
      * @param array $post
      * @return string|null
      */
+    private function getContent(array $post): string|null
+    {
+        if (! empty($post['message'])) {
+            return $post['message'];
+        }
+
+        if (! empty($post['description'])) {
+            return $post['description'];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $post
+     * @return string|null
+     */
     private function getMediaUrl(array $post): string|null
     {
         if (! empty($post['media'][0]) && 'photo' === $post['media'][0]['type']) {
@@ -114,4 +130,14 @@ class CrowdTangle extends BaseBulkFeedHandler
         }
         return null;
     }
+
+    /**
+     * @param array $post
+     * @return string|null
+     */
+    private function getPostUrl(array $post): string|null
+    {
+        return $post['postUrl'] ?? null;
+    }
+
 }
