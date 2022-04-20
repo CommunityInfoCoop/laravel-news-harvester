@@ -7,7 +7,7 @@
             / <span class="news-item-source-name">{{ $record->source_info->name }}</span>
             / <span class="news-item-feed-name">{{ $record->feed->name }}</span>
         </div>
-        <div class="news-item-title font-bold hover:underline focus:outline-none focus:underline filament-tables-link text-primary-600 hover:text-primary-500 dark:text-primary-500 dark:hover:text-primary-400">{{ $record->title }}</div>
+        <div class="news-item-title font-bold hover:underline focus:outline-none focus:underline filament-tables-link text-black-600 hover:text-black-500 dark:text-primary-500 dark:hover:text-primary-400">{{ $record->title }}</div>
         <div class="news-item-excerpt text-sm text-gray-600 dark:text-gray-300 pr-8 hidden sm:flex">{{ $record->excerpt }}</div>
     </div>
     @if($record->media_url)
