@@ -2,7 +2,6 @@
 
 namespace CommunityInfoCoop\NewsHarvester\Models;
 
-use App\Settings\DisplaySettings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -66,7 +65,15 @@ class NewsItem extends Model
         }
     }
 
-    public function getExcerptAttribute()
+    public function getIsSocialAttribute(): bool
+    {
+        if (! empty($this->feed->type) && in_array($this->feed->type, ['facebook_group', 'facebook_page'])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getExcerptAttribute(): string
     {
         $maxWords = 25;
         return Str::words(strip_tags($this->content), $maxWords);

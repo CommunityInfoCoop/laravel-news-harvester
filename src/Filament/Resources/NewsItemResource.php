@@ -15,6 +15,7 @@ use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
@@ -161,11 +162,6 @@ class NewsItemResource extends Resource
                     ->openUrlInNewTab(),
 
             ]);
-    }
-
-    protected function getTableRecordsPerPageSelectOptions(): array
-    {
-        return [25, 50, 100, 200];
     }
 
     public static function getRelations(): array
