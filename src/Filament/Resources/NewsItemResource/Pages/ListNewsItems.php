@@ -8,4 +8,9 @@ use Filament\Resources\Pages\ListRecords;
 class ListNewsItems extends ListRecords
 {
     protected static string $resource = NewsItemResource::class;
+
+    public function boot()
+    {
+        config(['filament.layout.max_content_width' => '3xl']);
+    }
 }
