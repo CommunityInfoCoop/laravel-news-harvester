@@ -35,7 +35,6 @@ class SourceResource extends Resource
                 TextInput::make('url')->url()->label('Website URL'),
                 Select::make('type')->options(config('news-harvester.select_options.source_types')),
                 Textarea::make('internal_notes'),
-                Checkbox::make('is_active')->default(true)->label('Active?')->inline(),
             ])->columns(1);
     }
 
@@ -45,7 +44,6 @@ class SourceResource extends Resource
             ->columns([
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('type')->enum(config('news-harvester.select_options.source_types')),
-                BooleanColumn::make('is_active')->label('Active?'),
             ])
             ->filters([
                 //
