@@ -2,6 +2,7 @@
 
 namespace CommunityInfoCoop\NewsHarvester\Filament\Resources;
 
+use App\Filament\Resources\SourceResource\RelationManagers\NewsItemsRelationManager;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\SourceResource\Pages;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\SourceResource\RelationManagers;
 use CommunityInfoCoop\NewsHarvester\Models\Source;
@@ -53,7 +54,9 @@ class SourceResource extends Resource
     public static function getRelations(): array
     {
         return [
+            RelationManagers\NewsItemsRelationManager::class,
             RelationManagers\FeedsRelationManager::class,
+
         ];
     }
 
