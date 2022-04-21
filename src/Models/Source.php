@@ -31,9 +31,9 @@ class Source extends Model
         return $this->hasMany(Feed::class);
     }
 
-    public function newsItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function newsItems(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
-        return $this->hasMany(NewsItem::class);
+        return $this->hasManyThrough(NewsItem::class, Feed::class);
     }
 
     public function scopeActive(Builder $query): Builder
