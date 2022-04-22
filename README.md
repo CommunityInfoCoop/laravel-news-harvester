@@ -63,6 +63,7 @@ return [
             'facebook_page' => 'Facebook Page',
         ],
     ],
+    'top_sources_tag' => 'Top',
     'modules' => [
         'crowdtangle' => [
             'api_token' => env('CROWDTANGLE_API_TOKEN', ''),

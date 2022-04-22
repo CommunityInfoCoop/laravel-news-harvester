@@ -42,4 +42,9 @@ class Source extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public function scopeTop(Builder $query): Builder
+    {
+        return $query->withAnyTags([config('news-harvester.top_sources_tag', 'Top')], 'source');
+    }
 }
