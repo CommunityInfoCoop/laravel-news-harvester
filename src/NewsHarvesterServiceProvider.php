@@ -51,12 +51,10 @@ class NewsHarvesterServiceProvider extends PluginServiceProvider
                 'news-harvester',
                 'filament',
                 'feeds',
-                'permission',
             ])
             ->hasViews()
             ->hasMigrations([
                 'create_news_harvester_tables',
-                'create_permission_tables',
             ])
             ->hasCommands([
                 CheckFeedsCommand::class,

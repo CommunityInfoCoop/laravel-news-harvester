@@ -31,7 +31,7 @@ php artisan vendor:publish --tag="news-harvester-migrations"
 php artisan migrate
 ```
 
-Optionally, you can publish the config files (for the main package and also for the feed, permission and Filament admin packages) with:
+Optionally, you can publish the config files (for the main package and also for the feed and Filament admin packages) with:
 
 ```bash
 php artisan vendor:publish --tag="news-harvester-config"
@@ -83,14 +83,12 @@ php artisan vendor:publish --tag="news-harvester-views"
 
 There are a few changes to make to the model you're using for Users that can login (probably `app/Models/User`):
 
-Add a contract `FilamentUser` and a trait `HasRoles`:
+Add a contract `FilamentUser`:
 
 ```php
 use Filament\Models\Contracts\FilamentUser;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser {
-    use HasRoles;
     ...
 }
 ```
@@ -100,7 +98,7 @@ Add a function `canAccessFilament()` to determine how a user will be allowed to 
 ```php
 public function canAccessFilament(): bool
 {
-    return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+    return str_ends_with($this->email, '@yourdomain.com');
 }
 ```
 
@@ -109,6 +107,15 @@ If you don't already have a user created to login with, you can use a command pr
 ```bash
 php artisan make:filament-user
 ```
+
+You can add additional user, role and permission management in your Laravel application as needed. We recommend these packages:
+
+* [laravel-permission](https://github.com/spatie/laravel-permission) - Role and permission architecture
+* [filament-user](https://github.com/3x1io/filament-user) - User resource management for Filament
+* [filament-shield](https://github.com/bezhansalleh/filament-shield) - Role and permission management for Filament
+* [filament-breezy](https://github.com/jeffgreco13/filament-breezy) - Simple login flow and profile management for Filament users
+
+There is a custom permission available on the Feed resource, `refresh_feed`, which controls a user's ability to initiate a refresh of an RSS feed.
 
 ### Command Scheduling
 
