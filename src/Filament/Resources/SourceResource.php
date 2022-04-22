@@ -9,6 +9,7 @@ use CommunityInfoCoop\NewsHarvester\Models\Source;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -16,7 +17,10 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\MultiSelectFilter;
+use Filament\Tables\Filters\SelectFilter;
 
 class SourceResource extends Resource
 {
@@ -35,6 +39,7 @@ class SourceResource extends Resource
                 TextInput::make('name')->required(),
                 TextInput::make('url')->url()->label('Website URL'),
                 Select::make('type')->options(config('news-harvester.select_options.source_types')),
+                SpatieTagsInput::make('tags')->type('source'),
                 Textarea::make('internal_notes'),
             ])->columns(1);
     }
@@ -45,9 +50,11 @@ class SourceResource extends Resource
             ->columns([
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('type')->enum(config('news-harvester.select_options.source_types')),
+                SpatieTagsColumn::make('tags')->type('source'),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')->options(config('news-harvester.select_options.source_types')),
+                MultiSelectFilter::make('tags')->relationship('tags', 'name'),
             ]);
     }
 

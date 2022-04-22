@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Tags\HasTags;
 
 class Source extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasTags;
 
     protected $table = 'harvest_sources';
 
