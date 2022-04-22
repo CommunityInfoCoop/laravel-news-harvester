@@ -204,6 +204,7 @@ class FeedResource extends Resource
         return [
             'index' => Pages\ListFeeds::route('/'),
             'create' => Pages\CreateFeed::route('/create'),
+            'view' => Pages\ViewFeed::route('/{record}'),
             'edit' => Pages\EditFeed::route('/{record}/edit'),
         ];
     }

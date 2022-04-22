@@ -65,6 +65,7 @@ class SourceResource extends Resource
         return [
             'index' => Pages\ListSources::route('/'),
             'create' => Pages\CreateSource::route('/create'),
+            'view' => Pages\ViewSource::route('/{record}'),
             'edit' => Pages\EditSource::route('/{record}/edit'),
         ];
     }
