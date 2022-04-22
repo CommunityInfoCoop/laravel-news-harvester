@@ -115,7 +115,25 @@ You can add additional user, role and permission management in your Laravel appl
 * [filament-shield](https://github.com/bezhansalleh/filament-shield) - Role and permission management for Filament
 * [filament-breezy](https://github.com/jeffgreco13/filament-breezy) - Simple login flow and profile management for Filament users
 
-There is a custom permission available on the Feed resource, `refresh_feed`, which controls a user's ability to initiate a refresh of an RSS feed.
+There is a custom permission used on the Feed resource, `refresh_feed`, which controls a user's ability to initiate a refresh of an RSS feed. If you use Filament Shield, you can add support by running:
+
+```shell
+artisan permission:create-permission refresh_feed
+```
+
+and then setting `'custom_permissions' => true` in your `filament-shield.php` config file before using the `shield:generate` command again.
+
+
+If you generate authorization policies for the models provided by this package (Source, Feed, NewsItem), you will need to manually add those to your `AuthServiceProvider.php` file, for example:
+
+```php
+protected $policies = [
+    'App\Models\User' => 'App\Policies\UserPolicy',
+    'CommunityInfoCoop\NewsHarvester\Models\Source' => 'App\Policies\SourcePolicy',
+    'CommunityInfoCoop\NewsHarvester\Models\Feed' => 'App\Policies\FeedPolicy',
+    'CommunityInfoCoop\NewsHarvester\Models\NewsItem' => 'App\Policies\NewsItemPolicy',
+];
+```
 
 ### Command Scheduling
 
