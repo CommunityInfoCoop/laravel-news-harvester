@@ -3,14 +3,9 @@
 namespace CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource\Pages;
 
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditFeed extends EditRecord
+class ViewFeed extends ViewRecord
 {
     protected static string $resource = FeedResource::class;
-
-    protected function getRelationManagers(): array
-    {
-        return [];
-    }
 }

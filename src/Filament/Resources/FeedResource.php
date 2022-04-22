@@ -173,12 +173,13 @@ class FeedResource extends Resource
                         CheckFeedJob::dispatch($record)
                         && Filament::notify('success', 'Checking Feed'))
                     ->icon('heroicon-o-refresh')
-                    ->visible(fn (Feed $record) => $record->type === 'rss'),
+                    ->visible(fn (Feed $record) => $record->type === 'rss' && auth()->user()->can('refresh_feed')),
             ])
             ->bulkActions([
                 BulkAction::make('check')
                     ->label('Check Feed(s) for Updates')
                     ->action(fn (Collection $records) => $records->each(fn ($feed) => CheckFeedJob::dispatch($feed)))
+                    ->visible(auth()->user()->can('refresh_feed'))
             ])
             ->filters([
                 Filter::make('active')->label('Only Active')->default()
@@ -204,6 +205,7 @@ class FeedResource extends Resource
         return [
             'index' => Pages\ListFeeds::route('/'),
             'create' => Pages\CreateFeed::route('/create'),
+            'view' => Pages\ViewFeed::route('/{record}'),
             'edit' => Pages\EditFeed::route('/{record}/edit'),
         ];
     }
