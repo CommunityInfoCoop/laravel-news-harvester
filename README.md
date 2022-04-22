@@ -28,6 +28,7 @@ You should publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="news-harvester-migrations"
+php artisan vendor:publish --provider="Spatie\Tags\TagsServiceProvider" --tag="tags-migrations"
 php artisan migrate
 ```
 
@@ -62,6 +63,7 @@ return [
             'facebook_page' => 'Facebook Page',
         ],
     ],
+    'top_sources_tag' => 'Top',
     'modules' => [
         'crowdtangle' => [
             'api_token' => env('CROWDTANGLE_API_TOKEN', ''),

@@ -104,9 +104,7 @@ class FeedResource extends Resource
                         ->default(config('news-harvester.feeds.check_frequency'))
                         ->label('Update frequency')
                         ->hint("How often, in minutes, to check the feed."),
-                    Checkbox::make('is_active')->default(true)->label('Active?'),
-                    Checkbox::make('is_starred')->default(false)->label('Starred?'),
-                    Checkbox::make('is_admin_paused')->label('Checks Paused?'),
+                    Checkbox::make('is_admin_paused')->label('Pause Checking this Feed?'),
                 ])->columnSpan(1)->columns(1),
                 Section::make('Activity')
                     ->schema([
@@ -164,7 +162,11 @@ class FeedResource extends Resource
                         'danger' => fn ($state, Feed $record): bool => $record->fail_count > 0
                         || Carbon::now()->subDays(60)->greaterThan($state),
                     ]),
-                BooleanColumn::make('is_active')->label('Active?'),
+                BooleanColumn::make('is_admin_paused')->label('Paused?')
+                    ->trueIcon('heroicon-o-pause')
+                    ->trueColor('warning')
+                    ->falseIcon('heroicon-o-play')
+                    ->falseColor('success'),
             ])
             ->prependActions([
                 IconButtonAction::make('check')

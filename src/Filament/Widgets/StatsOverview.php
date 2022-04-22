@@ -20,10 +20,10 @@ class StatsOverview extends BaseWidget
     {
         return [
             Card::make(
-                'Last 24h on Starred Feeds',
-                NewsItem::where('created_at', '<=', Carbon::now()->subHours(24))
-                    ->whereHas('feed', function (Builder $query) {
-                        return $query->starred();
+                'Last 24h from Top Sources',
+                NewsItem::where('created_at', '>=', Carbon::now()->subHours(24))
+                    ->whereHas('feed.source', function (Builder $query) {
+                        return $query->top();
                     })
                     ->count()
             ),

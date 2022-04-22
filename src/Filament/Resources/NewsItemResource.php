@@ -112,12 +112,11 @@ class NewsItemResource extends Resource
                         $types = $data['values'];
                         if ($types) {
                             return $query
-                                ->with(['feed', 'source'])
                                 ->whereHas('feed', function (Builder $query) use ($types) {
                                     $query->whereIn('harvest_feeds.type', $types);
                                 });
                         }
-                        return $query->with(['feed', 'source']);
+                        return $query;
                     }),
                 // Source types
                 MultiSelectFilter::make('source_type')
@@ -126,12 +125,11 @@ class NewsItemResource extends Resource
                         $types = $data['values'];
                         if ($types) {
                             return $query
-                                ->with(['feed', 'source'])
                                 ->whereHas('feed.source', function (Builder $query) use ($types) {
                                     $query->whereIn('harvest_sources.type', $types);
                                 });
                         }
-                        return $query->with(['feed', 'source']);
+                        return $query;
                     }),
                 // Search for a source
                 MultiSelectFilter::make('source')
@@ -140,18 +138,18 @@ class NewsItemResource extends Resource
                         $source_ids = $data['values'];
                         if ($source_ids) {
                             return $query
-                                ->with(['feed', 'source'])
                                 ->whereHas('feed.source', function (Builder $query) use ($source_ids) {
                                     $query->whereIn('harvest_sources.id', $source_ids);
                                 });
                         }
-                        return $query->with(['feed', 'source']);
+                        return $query;
                     }),
-                // Starred only
-                Filter::make('Starred Feeds Only')
-                    ->query(fn (Builder $query): Builder => $query->whereHas('feed', function (Builder $query) {
-                        return $query->starred();
-                    })),
+                // Top Sources Only
+                Filter::make('Top Sources Only')
+                    ->query(fn (Builder $query): Builder => $query->whereHas('feed.source', function (Builder $query) {
+                        return $query->top();
+                    }))
+                    ->default(),
             ])
             ->defaultSort('feed_timestamp', 'desc')
             ->actions([
@@ -184,4 +182,10 @@ class NewsItemResource extends Resource
             'edit' => Pages\EditNewsItem::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['feed.source']);
+    }
+
 }
