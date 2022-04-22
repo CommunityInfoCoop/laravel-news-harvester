@@ -1,4 +1,4 @@
-<div class="news-item-block mb-6 mt-2 pr-4 flex flex-row space-x-4 whitespace-normal">
+<div class="news-item-block mb-6 mt-2 px-4 py-1 flex flex-row space-x-4 whitespace-normal">
     @php
         $record = $getRecord();
     @endphp
