@@ -73,12 +73,14 @@ class FeedsRelationManager extends HasManyRelationManager
             ->headerActions([
                 ButtonAction::make('create')
                     ->label('Create')
-                    ->url(fn() => FeedResource::getUrl('create')),
+                    ->url(fn() => FeedResource::getUrl('create'))
+                    ->visible(auth()->user()->can('create_feed')),
             ])
-            ->actions([
-                LinkAction::make('edit')
-                    ->label('Edit')
-                    ->url(fn ($record) => FeedResource::getUrl('edit', ['record' => $record])),
+            ->pushActions([
+                LinkAction::make('view')
+                    ->url(fn ($record) => FeedResource::getUrl('view', ['record' => $record]))
+                    ->icon('heroicon-o-eye')
+                    ->visible(fn ($record) => auth()->user()->can('view', $record))
             ])
             ->filters([
                 //
