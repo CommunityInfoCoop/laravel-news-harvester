@@ -23,6 +23,7 @@
         "flowframe/laravel-trend": "^0.1.1",
         "illuminate/contracts": "^9.0",
         "spatie/laravel-package-tools": "^1.9.2",
+        "spatie/laravel-tags": "^4.3",
         "symfony/dom-crawler": "^6.0",
         "willvincent/feeds": "^2.3"
     },

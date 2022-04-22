@@ -28,6 +28,7 @@ You should publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --tag="news-harvester-migrations"
+php artisan vendor:publish --provider="Spatie\Tags\TagsServiceProvider" --tag="tags-migrations"
 php artisan migrate
 ```
 
