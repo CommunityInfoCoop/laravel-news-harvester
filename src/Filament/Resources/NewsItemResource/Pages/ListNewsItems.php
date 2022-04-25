@@ -13,7 +13,7 @@ class ListNewsItems extends ListRecords
 
     public function boot()
     {
-        config(['filament.layout.max_content_width' => '3xl']);
+        config(['filament.layout.max_content_width' => '2xl']);
     }
 
     protected function getTableRecordsPerPageSelectOptions(): array

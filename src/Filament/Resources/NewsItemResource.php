@@ -72,19 +72,9 @@ class NewsItemResource extends Resource
     {
         return $table
             ->columns([
-                IconColumn::make('')->getStateUsing(function (NewsItem $record) {
-                    return optional($record->feed)->type;
-                })
-                    ->options([
-                        'heroicon-o-collection',
-                        'heroicon-o-rss' => 'rss',
-                        'heroicon-o-chat-alt' => 'facebook_page',
-                        'heroicon-o-chat-alt-2' => 'facebook_group',
-                    ])
-                    ->url(fn (NewsItem $record): string => $record->url)
-                    ->openUrlInNewTab()
-                    ->visibleFrom('sm'),
-                ViewColumn::make('summary')->view('news-harvester::filament.tables.columns.news-item-summary')
+                ViewColumn::make('summary')
+                    ->label('')
+                    ->view('news-harvester::filament.tables.columns.news-item-summary')
                     ->url(fn (NewsItem $record): string => $record->url)
                     ->openUrlInNewTab(),
             ])
@@ -152,14 +142,8 @@ class NewsItemResource extends Resource
                     ->default(),
             ])
             ->defaultSort('feed_timestamp', 'desc')
-            ->actions([
-                ButtonAction::make('open')
-                    ->label('Open')
-                    ->url(fn (NewsItem $record): string => $record->url)
-                    ->icon('heroicon-o-external-link')
-                    ->openUrlInNewTab(),
-
-            ]);
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
