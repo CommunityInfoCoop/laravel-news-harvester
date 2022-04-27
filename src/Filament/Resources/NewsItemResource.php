@@ -18,6 +18,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Spatie\Tags\Tag;
 
 class NewsItemResource extends Resource
 {
@@ -134,12 +135,23 @@ class NewsItemResource extends Resource
                         }
                         return $query;
                     }),
-                // Top Sources Only
-                Filter::make('Top Sources Only')
-                    ->query(fn (Builder $query): Builder => $query->whereHas('feed.source', function (Builder $query) {
-                        return $query->top();
-                    }))
-                    ->default(),
+                // Source tags, or use the Top scope if none selected
+                MultiSelectFilter::make('tags')
+                    ->options(Tag::getWithType('source')->pluck('name', 'name'))
+                    ->query(function (Builder $query, array $data): Builder {
+                        $tag_ids = $data['values'];
+                        if ($tag_ids) {
+                            return $query
+                                ->whereHas('feed.source', function (Builder $query) use ($tag_ids) {
+                                    $query->withAnyTags($tag_ids, 'source');
+                                });
+                        }
+                        return $query
+                            ->whereHas('feed.source', function (Builder $query) {
+                                $query->top();
+                            });
+                    })
+                    ->label('Source Tags ("Top" if empty)'),
             ])
             ->defaultSort('feed_timestamp', 'desc')
             ->actions([])

@@ -1,6 +1,7 @@
 <div class="news-item-block mb-6 mt-2 px-4 py-1 flex flex-row space-x-4 whitespace-normal">
     @php
         $record = $getRecord();
+		$source_view_url = url('/admin/sources/' . $record->source_info->id);
     @endphp
     <div class="grow flex flex-col">
         <div class="flex justify-between items-center">
@@ -13,7 +14,7 @@
                     @endif
                 </span>
                 <div class="news-item-meta">
-                    <span class="news-item-source-name block text-base text-gray-900 dark:text-gray-100">{{ $record->source_info->name }}</span>
+                    <span class="news-item-source-name block text-base text-gray-900 dark:text-gray-100" onclick="window.location='{{ $source_view_url }}'">{{ $record->source_info->name }}</span>
                     <span class="news-item-publish-timestamp block text-gray-600 dark:text-gray-300">{{ $record->publish_timestamp->timezone(config('news-harvester.display_time_zone'))->format('M d, g:i a') }}</span>
                 </div>
             </div>
@@ -25,7 +26,9 @@
         </div>
         <a class="flex flex-col items-start mt-2" href="{{ $record->url }}" target="_blank">
         @if($record->isSocial)
-            <div class="news-item-content text-base text-gray-900 dark:text-gray-100 pr-8">{{ $record->content }}</div>
+            <div class="news-item-content text-base text-gray-900 dark:text-gray-100 w-screen max-w-xs sm:max-w-lg">
+                <p class="overflow-hidden break-words">{{ $record->content }}</p>
+            </div>
             @if($record->media_url)
                 <div class="items-center justify-center overflow-hidden py-2">
                     <img class="self-center" src="{{ $record->media_url }}" alt="Media image for {{ $record->title }}" />
