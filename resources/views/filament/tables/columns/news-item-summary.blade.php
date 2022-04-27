@@ -14,7 +14,7 @@
                     @endif
                 </span>
                 <div class="news-item-meta">
-                    <span class="news-item-source-name block text-base text-gray-900 dark:text-gray-100" onclick="window.location='{{ $source_view_url }}'">{{ $record->source_info->name }}</span>
+                    <span class="news-item-source-name block text-base font-bold text-gray-900 dark:text-gray-100" onclick="window.location='{{ $source_view_url }}'">{{ $record->source_info->name }}</span>
                     <span class="news-item-publish-timestamp block text-gray-600 dark:text-gray-300">{{ $record->publish_timestamp->timezone(config('news-harvester.display_time_zone'))->format('M d, g:i a') }}</span>
                 </div>
             </div>
