@@ -149,12 +149,6 @@ class NewsItemResource extends Resource
                         return $query;
                     })
                     ->label('Source Tags'),
-                // Top Sources Only
-                Filter::make('Top Sources Only')
-                    ->query(fn (Builder $query): Builder => $query->whereHas('feed.source', function (Builder $query) {
-                        return $query->top();
-                    }))
-                    ->default(),
             ])
             ->defaultSort('feed_timestamp', 'desc')
             ->actions([])
