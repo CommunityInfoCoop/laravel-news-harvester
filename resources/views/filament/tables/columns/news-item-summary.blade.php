@@ -1,6 +1,7 @@
 <div class="news-item-block mb-6 mt-2 px-4 py-1 flex flex-row space-x-4 whitespace-normal">
     @php
         $record = $getRecord();
+		$source_view_url = url('/admin/sources/' . $record->source_info->id);
     @endphp
     <div class="grow flex flex-col">
         <div class="flex justify-between items-center">
@@ -13,7 +14,7 @@
                     @endif
                 </span>
                 <div class="news-item-meta">
-                    <span class="news-item-source-name block text-base text-gray-900 dark:text-gray-100">{{ $record->source_info->name }}</span>
+                    <span class="news-item-source-name block text-base text-gray-900 dark:text-gray-100" onclick="window.location='{{ $source_view_url }}'">{{ $record->source_info->name }}</span>
                     <span class="news-item-publish-timestamp block text-gray-600 dark:text-gray-300">{{ $record->publish_timestamp->timezone(config('news-harvester.display_time_zone'))->format('M d, g:i a') }}</span>
                 </div>
             </div>
