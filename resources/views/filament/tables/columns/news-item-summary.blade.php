@@ -25,7 +25,9 @@
         </div>
         <a class="flex flex-col items-start mt-2" href="{{ $record->url }}" target="_blank">
         @if($record->isSocial)
-            <div class="news-item-content text-base text-gray-900 dark:text-gray-100 pr-8">{{ $record->content }}</div>
+            <div class="news-item-content text-base text-gray-900 dark:text-gray-100 w-screen max-w-xs sm:max-w-lg">
+                <p class="overflow-hidden break-words">{{ $record->content }}</p>
+            </div>
             @if($record->media_url)
                 <div class="items-center justify-center overflow-hidden py-2">
                     <img class="self-center" src="{{ $record->media_url }}" alt="Media image for {{ $record->title }}" />
