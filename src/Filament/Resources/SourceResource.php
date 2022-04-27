@@ -49,13 +49,14 @@ class SourceResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('type')->enum(config('news-harvester.select_options.source_types')),
+                TextColumn::make('type')->enum(config('news-harvester.select_options.source_types'))->sortable(),
                 SpatieTagsColumn::make('tags')->type('source'),
             ])
             ->filters([
                 SelectFilter::make('type')->options(config('news-harvester.select_options.source_types')),
                 MultiSelectFilter::make('tags')->relationship('tags', 'name'),
-            ]);
+            ])
+            ->defaultSort('name');
     }
 
     public static function getRelations(): array
