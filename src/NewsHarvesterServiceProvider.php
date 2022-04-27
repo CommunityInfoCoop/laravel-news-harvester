@@ -6,6 +6,7 @@ use CommunityInfoCoop\NewsHarvester\Commands\CheckBulkFeedsCommand;
 use CommunityInfoCoop\NewsHarvester\Commands\CheckFeedsCommand;
 use CommunityInfoCoop\NewsHarvester\Commands\ExportFeedsCommand;
 use CommunityInfoCoop\NewsHarvester\Commands\ImportFeedsCommand;
+use CommunityInfoCoop\NewsHarvester\Commands\ImportSourcesCommand;
 use CommunityInfoCoop\NewsHarvester\Commands\RefreshCrowdtangleFeedsCommand;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\NewsItemResource;
@@ -60,6 +61,7 @@ class NewsHarvesterServiceProvider extends PluginServiceProvider
                 CheckFeedsCommand::class,
                 CheckBulkFeedsCommand::class,
                 ImportFeedsCommand::class,
+                ImportSourcesCommand::class,
                 ExportFeedsCommand::class,
                 RefreshCrowdtangleFeedsCommand::class,
             ]);

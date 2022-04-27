@@ -153,6 +153,24 @@ If you wish to disable this so you can set up the schedule manually, do so in th
 'command_scheduling' => 'off',
 ```
 
+### Source Importing
+
+News Harvester can import a CSV file of Sources for fast setup of Sources you want to manage. The CSV should have a header row:
+
+```text
+name,url,type
+```
+
+where type is one of the valid values in the config file under "select_options => source_types".
+
+To import via artisan command:
+
+```shell
+artisan newsharvest:import-sources my-sources.csv
+```
+
+For existing sources with the same name, the importer will update the other fields with values from the CSV.
+
 ### Feed Importing
 
 News Harvester can import a standard [OPML](https://en.wikipedia.org/wiki/OPML) feed file for fast setup of Feeds you want to monitor.
