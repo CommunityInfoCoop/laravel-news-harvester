@@ -38,13 +38,6 @@ class NewsItemsRelationManager extends HasManyThroughRelationManager
                 //
             ])
             ->defaultSort('feed_timestamp', 'desc')
-            ->actions([
-                ButtonAction::make('open')
-                    ->label('Open')
-                    ->url(fn (NewsItem $record): string => $record->url)
-                    ->icon('heroicon-o-external-link')
-                    ->openUrlInNewTab(),
-
-            ]);
+            ->actions([]);
     }
 }
