@@ -25,7 +25,7 @@
         </div>
         <a class="flex flex-col items-start mt-2" href="{{ $record->url }}" target="_blank">
         @if($record->isSocial)
-            <div class="news-item-content text-sm text-gray-600 dark:text-gray-300 pr-8">{{ $record->content }}</div>
+            <div class="news-item-content text-base text-gray-900 dark:text-gray-100 pr-8">{{ $record->content }}</div>
             @if($record->media_url)
                 <div class="items-center justify-center overflow-hidden py-2">
                     <img class="self-center" src="{{ $record->media_url }}" alt="Media image for {{ $record->title }}" />
@@ -38,7 +38,7 @@
                 @endif
                 <div class="flex flex-col justify-between leading-normal">
                     <div class="news-item-title mb-2 text-xl font-bold tracking-tight hover:underline focus:outline-none focus:underline filament-tables-link text-black-600 hover:text-black-500 dark:text-primary-500 dark:hover:text-primary-400">{{ $record->title }}</div>
-                    <div class="news-item-excerpt mb-3 font-normal text-gray-600 dark:text-gray-300">{{ $record->excerpt }}</div>
+                    <div class="news-item-excerpt mb-3 text-base font-normal text-gray-900 dark:text-gray-100">{{ $record->excerpt }}</div>
                 </div>
             </div>
 
