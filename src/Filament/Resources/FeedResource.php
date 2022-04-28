@@ -8,6 +8,7 @@ use CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource\Pages;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource\RelationManagers;
 use CommunityInfoCoop\NewsHarvester\Jobs\CheckFeedJob;
 use CommunityInfoCoop\NewsHarvester\Models\Feed;
+use CommunityInfoCoop\NewsHarvester\Models\Source;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\BelongsToSelect;
@@ -22,11 +23,13 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\ButtonAction;
 use Filament\Tables\Actions\IconButtonAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -170,12 +173,22 @@ class FeedResource extends Resource
             ])
             ->prependActions([
                 IconButtonAction::make('check')
-                    ->label('Check')
                     ->action(fn (Feed $record) =>
                         CheckFeedJob::dispatch($record)
                         && Filament::notify('success', 'Checking Feed'))
                     ->icon('heroicon-o-refresh')
-                    ->visible(fn (Feed $record) => $record->type === 'rss' && auth()->user()->can('refresh_feed')),
+                    ->visible(fn (Feed $record) => $record->type === 'rss' && auth()->user()->can('refresh_feed'))
+                    ->tooltip('Check Feed for Updates'),
+                IconButtonAction::make('edit_source')
+                    ->action(fn (Feed $record, $data) => $record->source_id = $data['source'])
+                    ->form([
+                        Forms\Components\BelongsToSelect::make('source')
+                            ->relationship('source', 'name')
+                            ->searchable()
+                    ])
+                    ->icon('heroicon-o-office-building')
+                    ->tooltip('Edit Source')
+                    ->visible(fn (Feed $record) => auth()->user()->can('update', $record)),
             ])
             ->bulkActions([
                 BulkAction::make('check')
@@ -192,6 +205,7 @@ class FeedResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->stale()),
                 SelectFilter::make('type')
                     ->options(config('news-harvester.select_options.feed_types')),
+                MultiSelectFilter::make('source')->relationship('source', 'name'),
             ]);
     }
 
