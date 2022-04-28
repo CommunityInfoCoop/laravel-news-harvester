@@ -5,6 +5,9 @@ namespace CommunityInfoCoop\NewsHarvester\Filament\Resources\SourceResource\Rela
 use App\Filament\Resources\NewsItemResource;
 use CommunityInfoCoop\NewsHarvester\Filament\Resources\FeedResource;
 use Filament\Forms;
+use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\HasManyRelationManager;
 use Filament\Resources\Table;
@@ -76,11 +79,15 @@ class FeedsRelationManager extends HasManyRelationManager
                     ->url(fn() => FeedResource::getUrl('create'))
                     ->visible(auth()->user()->can('create_feed')),
             ])
-            ->pushActions([
+            ->actions([
                 LinkAction::make('view')
                     ->url(fn ($record) => FeedResource::getUrl('view', ['record' => $record]))
                     ->icon('heroicon-o-eye')
-                    ->visible(fn ($record) => auth()->user()->can('view', $record))
+                    ->visible(fn ($record) => auth()->user()->can('view', $record)),
+                LinkAction::make('edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn ($record) => auth()->user()->can('update', $record))
+                    ->url(fn ($record) => FeedResource::getUrl('edit', ['record' => $record]))
             ])
             ->filters([
                 //
