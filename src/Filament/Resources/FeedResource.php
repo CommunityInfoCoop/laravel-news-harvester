@@ -27,6 +27,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -192,6 +193,7 @@ class FeedResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->stale()),
                 SelectFilter::make('type')
                     ->options(config('news-harvester.select_options.feed_types')),
+                MultiSelectFilter::make('source')->relationship('source', 'name'),
             ]);
     }
 

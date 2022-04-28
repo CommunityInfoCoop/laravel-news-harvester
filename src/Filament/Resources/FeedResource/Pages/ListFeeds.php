@@ -8,4 +8,11 @@ use Filament\Resources\Pages\ListRecords;
 class ListFeeds extends ListRecords
 {
     protected static string $resource = FeedResource::class;
+
+    protected $queryString = [
+        'tableFilters',
+        'tableSortColumn',
+        'tableSortDirection',
+        'tableSearchQuery' => ['except' => ''],
+    ];
 }
