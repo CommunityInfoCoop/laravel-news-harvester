@@ -13,6 +13,7 @@ use Filament\Tables\Actions\ButtonAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -180,5 +181,4 @@ class NewsItemResource extends Resource
     {
         return parent::getEloquentQuery()->with(['feed.source']);
     }
-
 }
